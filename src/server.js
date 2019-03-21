@@ -16,6 +16,18 @@ server.route({
   },
 });
 
+server.route({
+  method: 'GET',
+  path: '/secret',
+  handler: (request, h) => {
+    const data = {
+      secret: process.env.APP_SECRET,
+    };
+
+    return h.response(data).code(200);
+  },
+});
+
 const init = async () => {
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
