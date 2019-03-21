@@ -1,0 +1,30 @@
+﻿apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: rocketseat/api:v1
+          ports:
+            - containerPort: 3333
+          resources:
+            requests:
+              memory: 200Mi
+              cpu: 60m
+            limits:
+              memory: 1512Mi
+              cpu: 150m
+          livenessProbe:
+            initialDelaySeconds: 3
+            failureThreshold: 3
+            periodSeconds: 5
+            httpGet:
+              path: /health
+              port: 3333
