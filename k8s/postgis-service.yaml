@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgis
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 25434
+      targetPort: 5432
