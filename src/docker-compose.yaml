@@ -1,0 +1,28 @@
+version: "3"
+
+volumes:
+  postgis-data:
+
+services:
+  api:
+    build: .
+    ports:
+      - "3333:3333"
+    command: "yarn start"
+    depends_on:
+      - postgis
+
+  postgis:
+    image: kartoza/postgis:11.0-2.5
+    volumes:
+      - postgis-data:/var/lib/postgresql
+    environment:
+      - POSTGRES_DB=gis
+      - POSTGRES_USER=docker
+      - POSTGRES_PASS=docker
+      - ALLOW_IP_RANGE=0.0.0.0/0
+    ports:
+      - 25434:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
